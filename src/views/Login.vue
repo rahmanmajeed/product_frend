@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-layout align-center justify-center wrap>
-      <v-flex xs10 sm12 md5>
+      <v-flex xs10 sm12 md5 class="pa-md-4 mx-lg-auto">
         <v-card class="elevation-12">
           <v-toolbar dark color="primary">
             <v-toolbar-title>Login form</v-toolbar-title>
@@ -33,7 +33,7 @@
                 </v-progress-circular>
               </div>
               <div v-if="isSuccess">
-                <p style="color: green;">Login Successfull...</p>
+                <p style="color: green;">Login Processing...</p>
               </div>
               <div v-if="isFailed">
                 <p style="color: red;">
@@ -90,10 +90,15 @@ export default {
     async onSubmit() {
       if (this.$refs.form.validate()) {
         try {
+          this.isSuccess = true;
           await loginUser(this.formSchema.email, this.formSchema.password);
           isLoggedIn();
-          this.$router.push("/home");
+          setTimeout(() => {
+            this.isSuccess = false;
+            this.$router.push("/home");
+          }, 2000);
         } catch (error) {
+          this.isFailed = true;
           this.message = "Invalid Credentials...";
         }
       } else {
@@ -104,6 +109,7 @@ export default {
       this.$refs.form.reset();
     },
     resetValidation() {
+      this.isFailed = false;
       this.$refs.form.resetValidation();
     },
   },
