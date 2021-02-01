@@ -13,7 +13,7 @@
                 <v-text-field
                   label="Title"
                   required
-                  :rules="[(v) => !!v || 'Title is required']"
+                  :rules="[v => !!v || 'Title is required']"
                   v-model="formSchema.title"
                 ></v-text-field>
               </v-col>
@@ -24,7 +24,7 @@
                   label="Description"
                   value=""
                   rows="1"
-                  :rules="[(v) => !!v || 'Description is required']"
+                  :rules="[v => !!v || 'Description is required']"
                   v-model="formSchema.description"
                 ></v-textarea>
               </v-col>
@@ -72,7 +72,7 @@
 
 <script>
 // @ is an alias to /src
-import {createProduct} from './../utils/product'
+import { createProduct,updateProduct } from "./../utils/product";
 export default {
   name: "Product-Form",
   props: ["formSchema"],
@@ -80,9 +80,9 @@ export default {
     return {
       valid: true,
       priceRules: [
-        (v) => !!v || "Price is required",
-        (v) => /^\d+(?:[.,]\d+)*$/gm.test(v) || "Price must be valid format",
-      ],
+        v => !!v || "Price is required",
+        v => /^\d+(?:[.,]\d+)*$/gm.test(v) || "Price must be valid format"
+      ]
     };
   },
   computed: {
@@ -91,12 +91,32 @@ export default {
     },
     formTitle() {
       return this.formSchema.id > 0 ? "Update Product" : "Create Product";
-    },
+    }
   },
   methods: {
     onSubmit() {
       if (this.$refs.form.validate()) {
-        createProduct(this.formSchema)
+        if (this.formSchema.id > 0) {
+          updateProduct(this.formSchema)
+            .then(res => {
+              this.reset();
+              this.formSchema.id = 0
+              this.formSchema.image = ""
+              this.$emit("onClose", res, "update");
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        } else {
+          createProduct(this.formSchema)
+            .then(res => {
+              this.reset();
+              this.$emit("onClose", res, "create");
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        }
       }
     },
     reset() {
@@ -108,10 +128,10 @@ export default {
     getImage(e) {
       let fileReader = new FileReader();
       fileReader.readAsDataURL(e.target.files[0]);
-      fileReader.onload = (e) => {
+      fileReader.onload = e => {
         this.formSchema.image = e.target.result;
       };
-    },
-  },
+    }
+  }
 };
 </script>

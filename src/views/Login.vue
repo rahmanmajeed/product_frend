@@ -95,14 +95,16 @@ export default {
       if (this.$refs.form.validate()) {
         try {
           this.isSuccess = true;
+          this.isFailed = false;
           await loginUser(this.formSchema.email, this.formSchema.password);
           isLoggedIn();
           setTimeout(() => {
             this.isSuccess = false;
             this.$router.push("/home");
-          }, 2000);
+          }, 1000);
         } catch (error) {
           this.isFailed = true;
+          this.isSuccess = false;
           this.message = "Invalid Credentials...";
         }
       } else {
@@ -116,9 +118,9 @@ export default {
       this.isFailed = false;
       this.$refs.form.resetValidation();
     },
-    register () {
-      this.$router.push('/register')
-    }
+    register() {
+      this.$router.push("/register");
+    },
   },
 };
 </script>

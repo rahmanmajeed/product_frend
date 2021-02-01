@@ -51,7 +51,7 @@ export function updateProduct(product) {
       Authorization: await getToken()
     };
     axios
-      .put(`${API_END_POINT.API_SERVER_URL}/api/product/${product.id}`, product, {
+      .put(`${API_END_POINT.API_SERVER_URL}/api/products/${product.id}`, product, {
         headers: headers
       })
       .then(res => {
@@ -70,7 +70,7 @@ export function deleteProduct(product) {
       Authorization: await getToken()
     };
     axios
-      .delete(`${API_END_POINT.API_SERVER_URL}/api/product/${product.id}`, {
+      .delete(`${API_END_POINT.API_SERVER_URL}/api/products/${product.id}`, {
         headers: headers
       })
       .then(res => {
