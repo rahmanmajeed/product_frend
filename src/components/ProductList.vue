@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import {allProduct } from "./../utils/product";
 export default {
   name: "Product-List",
   props: ["formSchema"],
@@ -75,5 +76,9 @@ export default {
       ],
     };
   },
+
+  mounted () {
+     console.log(allProduct())
+  }
 };
 </script>

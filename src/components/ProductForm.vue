@@ -53,7 +53,7 @@
                 :disabled="!valid"
                 color="success"
                 class="mr-4"
-                @click="validate"
+                @click="onSubmit"
               >
                 {{ btnTitle }}
               </v-btn>
@@ -72,6 +72,7 @@
 
 <script>
 // @ is an alias to /src
+import {createProduct} from './../utils/product'
 export default {
   name: "Product-Form",
   props: ["formSchema"],
@@ -93,9 +94,9 @@ export default {
     },
   },
   methods: {
-    validate() {
+    onSubmit() {
       if (this.$refs.form.validate()) {
-        this.$emit("onSubmit", this.formSchema);
+        createProduct(this.formSchema)
       }
     },
     reset() {

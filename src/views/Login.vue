@@ -57,6 +57,10 @@
               </v-btn>
             </v-card-actions>
           </v-form>
+          <v-spacer></v-spacer>
+          <v-btn text color="primary" @click="register">
+            <u>Are you New ? please Register</u>
+          </v-btn>
         </v-card>
       </v-flex>
     </v-layout>
@@ -112,6 +116,9 @@ export default {
       this.isFailed = false;
       this.$refs.form.resetValidation();
     },
+    register () {
+      this.$router.push('/register')
+    }
   },
 };
 </script>

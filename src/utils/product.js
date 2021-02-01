@@ -16,7 +16,7 @@ export function allProduct() {
       Authorization: await getToken()
     };
     axios
-      .get(`${API_END_POINT.API_SERVER_URL}/api/product`, { headers: headers })
+      .get(`${API_END_POINT.API_SERVER_URL}/api/products`, { headers: headers })
       .then(res => {
         resolve(res);
       })
