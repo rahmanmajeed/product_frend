@@ -1,30 +1,20 @@
 <template>
   <nav>
     <v-toolbar>
-      <!--      <v-toolbar-side-icon></v-toolbar-side-icon> -->
-      <!-- <v-app-bar-nav-icon class="grey--text"></v-app-bar-nav-icon> -->
-
       <v-spacer></v-spacer>
-
       <v-menu offset-y>
         <template v-slot:activator="{ on }">
-          <!-- <v-btn text slot="activator"> -->
           <v-btn text v-on="on">
             <v-icon left>mdi-account-circle</v-icon>
-            <span>Majed</span>
+            <span>{{ username }}</span>
           </v-btn>
         </template>
-        <v-list>
-          <!-- v-list-tile is changed to v-list-item -->
-          <v-list-item
-            v-for="link in links"
-            :key="link.text"
-            router
-            :to="link.route"
-          >
-            <v-list-item-title>{{ link.text }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
+        <!-- <v-list> -->
+        <!-- v-list-tile is changed to v-list-item -->
+        <!-- <v-list-item> -->
+        <!-- <v-list-item-title>{{ link.text }}</v-list-item-title> -->
+        <!-- </v-list-item> -->
+        <!-- </v-list> -->
       </v-menu>
 
       <v-btn @click="logout()" color="error">
@@ -40,6 +30,7 @@
 import { logoutUser } from "./../utils/auth";
 
 export default {
+  props: ["username"],
   data() {
     return {
       drawer: false,

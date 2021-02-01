@@ -17,6 +17,7 @@ export function loginUser(email, password) {
       });
 
       setAuthToken(res.data.access_token);
+      setUser(res.data.user.name);
       resolve(res);
     } catch (error) {
       console.error("Caught an error during login:", error);
@@ -32,6 +33,9 @@ export function logoutUser() {
 export function setAuthToken(token) {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   localStorage.setItem(AUTH_TOKEN_KEY, token);
+}
+export function setUser(user) {
+  localStorage.setItem("Username", user);
 }
 export function getAuthToken() {
   return localStorage.getItem(AUTH_TOKEN_KEY);
